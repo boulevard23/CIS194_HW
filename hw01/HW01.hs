@@ -28,7 +28,12 @@ doubleEveryOther l = zipWith (\x y -> if (y `mod` 2 == 0) then x * 2 else x) l [
 
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
+sumDigits = sum . map f
+  where
+    f v
+      | v <= 9    = v
+      | otherwise = (sum (toRevDigits v))
+
 
 
 -- Exercise 5 -----------------------------------------
