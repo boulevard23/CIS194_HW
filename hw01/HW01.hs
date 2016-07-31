@@ -22,7 +22,7 @@ toRevDigits n
 
 -- Double every second number in a list starting on the left.
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther l = zipWith (\x y -> if y `mod` 2 == 0 then x * 2 else x) l [(1::Integer)..]
+doubleEveryOther l = zipWith (\x y -> if (y `mod` 2 == 0) then x * 2 else x) l [(1 :: Integer)..]
 
 -- Exercise 4 -----------------------------------------
 
