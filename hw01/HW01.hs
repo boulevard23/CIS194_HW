@@ -40,7 +40,9 @@ sumDigits = sum . map f
 
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
+luhn = f . sumDigits . doubleEveryOther . toRevDigits
+  where
+    f v = v `mod` 10 == 0
 
 -- Exercise 6 -----------------------------------------
 
