@@ -29,10 +29,9 @@ doubleEveryOther l = zipWith (\x y -> if (y `mod` 2 == 0) then x * 2 else x) l [
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
 sumDigits = sum . map f
-  where
-    f v
-      | v <= 9    = v
-      | otherwise = (sum (toRevDigits v))
+  where f v
+         | v <= 9    = v
+         | otherwise = (sum (toRevDigits v))
 
 
 
@@ -41,8 +40,7 @@ sumDigits = sum . map f
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
 luhn = f . sumDigits . doubleEveryOther . toRevDigits
-  where
-    f v = v `mod` 10 == 0
+  where f v = v `mod` 10 == 0
 
 -- Exercise 6 -----------------------------------------
 
@@ -51,4 +49,7 @@ type Peg = String
 type Move = (Peg, Peg)
 
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi = undefined
+hanoi n a c b
+  | n <= 0 = []
+  | otherwise = hanoi (n - 1) a b c ++
+      ((a, c) : hanoi (n - 1) b c a)
