@@ -57,7 +57,7 @@ isConsistent (Move guess exactMatchesCount nonExactMatchesCount) anotherGuess = 
 -- Exercise 5 -----------------------------------------
 
 filterCodes :: Move -> [Code] -> [Code]
-filterCodes = undefined
+filterCodes move allPossibilities = filter (isConsistent move) allPossibilities
 
 -- Exercise 6 -----------------------------------------
 
