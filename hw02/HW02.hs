@@ -43,7 +43,10 @@ matches actual guess = sum $ zipWith min (countColors actual) (countColors guess
 
 -- Construct a Move from a guess given the actual code
 getMove :: Code -> Code -> Move
-getMove = undefined
+getMove actual guess = Move guess exactMatchesCount (matchesCount - exactMatchesCount)
+  where
+    matchesCount = matches actual guess
+    exactMatchesCount = exactMatches actual guess
 
 -- Exercise 4 -----------------------------------------
 
