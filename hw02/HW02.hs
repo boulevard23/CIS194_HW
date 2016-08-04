@@ -68,7 +68,14 @@ allCodes n = [c : codes | c <- colors, codes <- allCodes (n-1)]
 -- Exercise 7 -----------------------------------------
 
 solve :: Code -> [Move]
-solve = undefined
+solve actual = choose actual $ allCodes (length actual)
+
+choose :: Code -> [Code] -> [Move]
+choose _ [] = []
+choose c (x:xs)
+  | x == c    = [m]
+  | otherwise = m : (choose c $ filterCodes m xs)
+  where m = getMove c x
 
 -- Bonus ----------------------------------------------
 
