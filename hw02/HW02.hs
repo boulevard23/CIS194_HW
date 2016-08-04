@@ -51,7 +51,8 @@ getMove actual guess = Move guess exactMatchesCount (matchesCount - exactMatches
 -- Exercise 4 -----------------------------------------
 
 isConsistent :: Move -> Code -> Bool
-isConsistent = undefined
+isConsistent (Move guess exactMatchesCount nonExactMatchesCount) anotherGuess = exactMatchesCount == exactMatchesCount' && nonExactMatchesCount == nonExactMatchesCount'
+  where Move _ exactMatchesCount' nonExactMatchesCount' = getMove guess anotherGuess
 
 -- Exercise 5 -----------------------------------------
 
