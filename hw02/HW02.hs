@@ -62,7 +62,8 @@ filterCodes move allPossibilities = filter (isConsistent move) allPossibilities
 -- Exercise 6 -----------------------------------------
 
 allCodes :: Int -> [Code]
-allCodes = undefined
+allCodes 0 = [[]]
+allCodes n = [c : codes | c <- colors, codes <- allCodes (n-1)]
 
 -- Exercise 7 -----------------------------------------
 
