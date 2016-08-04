@@ -72,10 +72,10 @@ solve actual = choose actual $ allCodes (length actual)
 
 choose :: Code -> [Code] -> [Move]
 choose _ [] = []
-choose c (x:xs)
-  | x == c    = [m]
-  | otherwise = m : (choose c $ filterCodes m xs)
-  where m = getMove c x
+choose actual (x:xs)
+  | x == actual = [move]
+  | otherwise   = move : (choose actual $ filterCodes move xs)
+  where move = getMove actual x
 
 -- Bonus ----------------------------------------------
 
