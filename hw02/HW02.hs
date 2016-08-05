@@ -51,22 +51,31 @@ getMove actual guess = Move guess exactMatchesCount (matchesCount - exactMatches
 -- Exercise 4 -----------------------------------------
 
 isConsistent :: Move -> Code -> Bool
-isConsistent = undefined
+isConsistent (Move guess exactMatchesCount nonExactMatchesCount) anotherGuess = exactMatchesCount == exactMatchesCount' && nonExactMatchesCount == nonExactMatchesCount'
+  where Move _ exactMatchesCount' nonExactMatchesCount' = getMove guess anotherGuess
 
 -- Exercise 5 -----------------------------------------
 
 filterCodes :: Move -> [Code] -> [Code]
-filterCodes = undefined
+filterCodes move allPossibilities = filter (isConsistent move) allPossibilities
 
 -- Exercise 6 -----------------------------------------
 
 allCodes :: Int -> [Code]
-allCodes = undefined
+allCodes 0 = [[]]
+allCodes n = [c : codes | c <- colors, codes <- allCodes (n-1)]
 
 -- Exercise 7 -----------------------------------------
 
 solve :: Code -> [Move]
-solve = undefined
+solve actual = choose actual $ allCodes (length actual)
+
+choose :: Code -> [Code] -> [Move]
+choose _ [] = []
+choose actual (x:xs)
+  | x == actual = [move]
+  | otherwise   = move : (choose actual $ filterCodes move xs)
+  where move = getMove actual x
 
 -- Bonus ----------------------------------------------
 
