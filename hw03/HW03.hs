@@ -42,7 +42,22 @@ empty _ = 0
 -- Exercise 2 -----------------------------------------
 
 evalE :: State -> Expression -> Int
-evalE = undefined
+evalE state (Var x) = state x
+evalE state (Val x) = x
+evalE state (Op l bop r) =
+    case bop of
+      Plus   -> x + y
+      Minus  -> x - y
+      Times  -> x * y
+      Divide -> x `div` y
+      Gt     -> boolToInt $ x > y
+      Ge     -> boolToInt $ x >= y
+      Lt     -> boolToInt $ x < y
+      Le     -> boolToInt $ x <= y
+      Eql    -> boolToInt $ x == y
+    where x = evalE state l
+          y = evalE state r
+          boolToInt a = if a then 1 else 0
 
 -- Exercise 3 -----------------------------------------
 
