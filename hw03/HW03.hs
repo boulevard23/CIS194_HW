@@ -72,18 +72,22 @@ desugar :: Statement -> DietStatement
 desugar (Assign var val)              = DAssign var val
 desugar (Incr var)                    = DAssign var (Op (Var var) Plus (Val 1))
 desugar (If expr thenSt elseSt)       = DIf expr (desugar thenSt) (desugar elseSt)
-desugar (While expr st)               = DWhile expr (desugar st)
-desugar (For initSt expr incrSt doSt) = DSequence (desugar initSt) (DWhile expr (DSequence (desugar incrSt) (desugar doSt)))
+desugar (While expr doSt)               = DWhile expr (desugar doSt)
+desugar (For initSt expr incrSt doSt) = DSequence (desugar initSt) (DWhile expr (DSequence (desugar doSt) (desugar incrSt)))
 desugar (Sequence firstSt secondSt)   = DSequence (desugar firstSt) (desugar secondSt)
 desugar Skip                          = DSkip
 
 -- Exercise 4 -----------------------------------------
 
 evalSimple :: State -> DietStatement -> State
-evalSimple = undefined
+evalSimple st (DAssign var val)            = extend st var (evalE st val)
+evalSimple st (DIf expr thenSt elseSt)     = if (evalE st expr) == 1 then evalSimple st thenSt else evalSimple st elseSt
+evalSimple st dietSt@(DWhile expr doSt)    = if (evalE st expr) == 1 then evalSimple (evalSimple st doSt) dietSt else st
+evalSimple st (DSequence firstSt secondSt) = evalSimple (evalSimple st firstSt) secondSt
+evalSimple st DSkip                        = st
 
 run :: State -> Statement -> State
-run = undefined
+run st statement = evalSimple st (desugar statement)
 
 -- Programs -------------------------------------------
 
